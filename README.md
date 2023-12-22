@@ -1,0 +1,2 @@
+# web_mock_platform
+开发针对web项目的mock平台，能够拦截请求做响应数据的篡改
