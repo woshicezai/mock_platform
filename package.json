@@ -1,0 +1,11 @@
+{
+  "name": "mock_platform",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "woshicezai <behappys@sina.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ]
+}
