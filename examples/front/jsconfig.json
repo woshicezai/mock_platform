@@ -1,0 +1,11 @@
+// tsconfig.json 或 jsconfig.json
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"],
+        "utils/*": ["./src/utils/*"]
+      }
+    },
+    "include": ["src/**/*"] // 这一行告诉VSCode哪些文件是项目的一部分
+  }
