@@ -6,7 +6,12 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 import type { Options } from 'http-proxy-middleware/dist/types.d.ts'
 
 const options: Options = {
-  target: 'http://localhost:3000', // 你想要代理到的目标服务器地址
+  // target: 'http://localhost:3000', // 默认的目标服务器地址
+  router(req) {
+    // 你想要代理到的目标服务器地址，根据请求动态配置
+    const targetHost = req.headers['x-target-host'] || ''
+    return targetHost as string
+  },
   changeOrigin: true,
   selfHandleResponse: true,
   pathRewrite: {
@@ -61,7 +66,7 @@ const app = express()
 // };
 app.use(cors())
 
-app.use('/api', createProxyMiddleware(options))
+app.use('/*', createProxyMiddleware(options))
 
 // 定义服务器要监听的端口
 const PORT = 4000
