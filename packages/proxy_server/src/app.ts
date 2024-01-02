@@ -66,7 +66,12 @@ const app = express()
 // };
 app.use(cors())
 
-app.use('/*', createProxyMiddleware(options))
+//探针使用，看当前服务是否存活
+app.get('/', function (req, res) {
+  res.json({ message: '代理服务器请求正常' })
+})
+//代理所有请求，除去/
+app.use(/^\/.+$/, createProxyMiddleware(options))
 
 // 定义服务器要监听的端口
 const PORT = 4000
