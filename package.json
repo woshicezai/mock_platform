@@ -9,9 +9,12 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:client":"yarn workspace proxy_client dev",
-    "dev:server":"yarn workspace proxy_server dev",
-    "dev:proxy":"yarn dev:client && yarn dev:server",
-    "example":"yarn dev:server && cd example/front && yarn && yarn dev && cd example/server && yarn && yarn dev"
+    "dev:client": "yarn workspace proxy_client dev",
+    "dev:server": "yarn workspace proxy_server dev",
+    "dev:proxy": "yarn dev:client && yarn dev:server",
+    "example": "concurrently \"yarn dev:server\" \" cd example/front && yarn && yarn dev\" \"cd example/server && yarn && yarn dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
