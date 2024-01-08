@@ -7,7 +7,9 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "types/*": ["./src/types/*"],
+      "utils/*": ["./src/utils/*"],
     }
   }
 }

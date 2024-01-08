@@ -11,7 +11,7 @@
   <div>
     <button @click="fetchServer">请求server</button>
     <div>
-      <h1>{{ hello.message }}</h1>
+      <h1>{{ hello }}</h1>
     </div>
   </div>
 </template>

@@ -1,63 +1,24 @@
 // 导入Express模块
 import express from 'express'
 import cors from 'cors'
-import { modifyResponseToString } from './modifyResponse'
 import { createProxyMiddleware } from 'http-proxy-middleware'
-import type { Options } from 'http-proxy-middleware/dist/types.d.ts'
-
-const options: Options = {
-  // target: 'http://localhost:3000', // 默认的目标服务器地址
-  router(req) {
-    // 你想要代理到的目标服务器地址，根据请求动态配置
-    const targetHost = req.headers['x-target-host'] || ''
-    return targetHost as string
-  },
-  changeOrigin: true,
-  selfHandleResponse: true,
-  pathRewrite: {
-    // "^/api": "/", // 重写请求路径
-  },
-  onProxyRes: function (proxyRes, req, res) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const originalBody: any[] = []
-    proxyRes.on('data', (chunk) => {
-      originalBody.push(chunk)
-    })
-    proxyRes.on('end', () => {
-      // Combine the body chunks to create the full body
-      const bodyString = Buffer.concat(originalBody).toString()
-      // Modify the response here
-      const modifiedBody = modifyResponseToString(bodyString) // Assume modifyResponse is your custom function
-      console.log('modifiedBody ', bodyString, modifiedBody)
-      // You may need to adjust the content-length header if the body length has changed
-      res.setHeader('Content-Length', Buffer.byteLength(modifiedBody))
-      // Send the modified body
-      res.end(modifiedBody)
-    })
-
-    // It's important to remove the content-encoding header if the response is compressed,
-    // since the body modifications will change the content.
-    if (proxyRes.headers['content-encoding']) {
-      delete proxyRes.headers['content-encoding']
-    }
-
-    // To prevent the `http-proxy-middleware` from automatically sending the response,
-    // we need to remove the `content-length` header and pause the proxy response.
-    delete proxyRes.headers['content-length']
-    // proxyRes.pause();
-  },
-  onError: function (err, req, res) {
-    // 错误处理
-    // res.status(500).send("Proxy Error");
-    console.log('onError', err)
-    if (!res.headersSent) {
-      res.status(500).json({ error: 'Proxy error' })
-    }
-  }
-}
+import proxyOptions from './proxy/options'
+import proxyFilter from './proxy/filter'
+import proxyClientRouter from './routers/proxyClientRouter'
+import dataBaseConnect from './database/index'
+import { PORT, PREFIX_PROXY_NAME } from './const'
 
 // 创建一个Express应用
 const app = express()
+
+// 解析JSON格式的请求体
+app.use(express.json())
+
+// 解析URL-encoded格式的请求体
+app.use(express.urlencoded({ extended: true }))
+
+//连接数据库
+dataBaseConnect()
 
 //解决请求跨域
 // const corsOptions = {
@@ -70,11 +31,10 @@ app.use(cors())
 app.get('/', function (req, res) {
   res.json({ message: '代理服务器请求正常' })
 })
-//代理所有请求，除去/
-app.use(/^\/.+$/, createProxyMiddleware(options))
-
-// 定义服务器要监听的端口
-const PORT = 4000
+//代理所有请求，如果是根路径或以/proxy-client开头的路径，不进行代理
+app.use(createProxyMiddleware(proxyFilter(PREFIX_PROXY_NAME), proxyOptions))
+//代理前端页面的请求处理
+app.use(`/${PREFIX_PROXY_NAME}`, proxyClientRouter)
 
 // 使应用监听指定端口并启动服务器
 app.listen(PORT, () => {
