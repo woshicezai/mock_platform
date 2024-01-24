@@ -9,16 +9,14 @@
     @change="changeProxyStatus"
   />
   <div>
-    <button @click="fetchHello">请求 api hello 接口</button>
-    <button @click="fetchBye">请求 api bye 接口</button>
-    <div>
-      hello:
-      <h1>{{ hello }}</h1>
-    </div>
-    <div>
-      bye:
-      <h1>{{ bye }}</h1>
-    </div>
+    <el-row class="mb-4">
+      <el-button type="success" @click="fetchHello">请求 api hello 接口</el-button>
+      <div class="message">{{ hello }}</div>
+    </el-row>
+    <el-row class="mb-4 gap">
+      <el-button type="success" @click="fetchBye">请求 api bye 接口</el-button>
+      <div class="message">{{ bye }}</div>
+    </el-row>
   </div>
 </template>
 
@@ -71,5 +69,13 @@ const changeProxyStatus = (isProxy) => {
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+.gap {
+  margin-top: 20px;
+}
+.message {
+  width: 400px;
+  margin-left: 10px;
 }
 </style>
