@@ -14,11 +14,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@types/ace": "^0.0.52",
     "axios": "^1.6.4",
     "element-plus": "^2.4.4",
+    "js-beautify": "^1.14.11",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",
-    "vue-json-pretty": "^2.3.0",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

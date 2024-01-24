@@ -389,6 +389,11 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node18/-/node18-18.2.2.tgz#81fb16ecff0d400b1cbadbf76713b50f331029ce"
   integrity sha512-d6McJeGsuoRlwWZmVIeE8CUA27lu6jLjvv1JzqmpsytOYYbVi1tHZEnwCNVOXnj4pyLvneZlFlpXUK+X9wBWyw==
 
+"@types/ace@^0.0.52":
+  version "0.0.52"
+  resolved "https://registry.yarnpkg.com/@types/ace/-/ace-0.0.52.tgz#e530e7b85e5407ed3b8c987a3719692ac0d95d4c"
+  integrity sha512-YPF9S7fzpuyrxru+sG/rrTpZkC6gpHBPF14W3x70kqVOD+ks6jkYLapk4yceh36xej7K4HYxcyz9ZDQ2lTvwgQ==
+
 "@types/body-parser@*":
   version "1.19.5"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.5.tgz#04ce9a3b677dc8bd681a17da1ab9835dc9d3ede4"
@@ -2222,7 +2227,7 @@ jackspeak@^2.3.5:
   optionalDependencies:
     "@pkgjs/parseargs" "^0.11.0"
 
-js-beautify@^1.14.9:
+js-beautify@^1.14.11, js-beautify@^1.14.9:
   version "1.14.11"
   resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.14.11.tgz#57b17e009549ac845bdc58eddf8e1862e311314e"
   integrity sha512-rPogWqAfoYh1Ryqqh2agUpVfbxAhbjuN1SmU86dskQUKouRiggUTCO4+2ym9UPXllc2WAp0J+T5qxn7Um3lCdw==
@@ -3621,11 +3626,6 @@ vue-eslint-parser@^9.3.1:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^7.3.6"
-
-vue-json-pretty@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/vue-json-pretty/-/vue-json-pretty-2.3.0.tgz#ad85a161575d7fcd7b3e6baad559b2af0df663fa"
-  integrity sha512-iBul6Xg7vZfMV2MQC/gGtzbyg8FLk6cJ8KG91f37UEkQyXqHg91VQJ24bDBXNVuOSP04BUKxWagD3V2N/WEy0g==
 
 vue-router@^4.2.5:
   version "4.2.5"
