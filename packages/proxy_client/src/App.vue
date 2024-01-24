@@ -13,7 +13,7 @@
                 <el-input v-else v-model="scope.row.title" />
               </template>
             </el-table-column>
-            <el-table-column prop="url" label="url" width="300">
+            <el-table-column prop="url" label="url" width="200">
               <template #default="scope">
                 <span v-if="!scope.row.editable">{{ scope.row.url }}</span>
                 <el-input v-else v-model="scope.row.url" />
@@ -33,7 +33,7 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column fixed="right" label="Operations" width="120">
+            <el-table-column fixed="right" label="Operations" width="200">
               <template #default="scope">
                 <el-button type="primary" size="small" @click.prevent="edit(scope.row)">
                   编辑
