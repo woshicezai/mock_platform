@@ -17,4 +17,8 @@ export default class JSONEditor {
   getValue<T>(): T {
     return JSON.parse(this.editor.getValue() || '{}') as T
   }
+
+  editModal(isEdit: boolean) {
+    this.editor.setReadOnly(!isEdit)
+  }
 }

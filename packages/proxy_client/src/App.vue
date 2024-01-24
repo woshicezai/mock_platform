@@ -61,8 +61,8 @@ import { onMounted, ref } from 'vue'
 import { ElNotification } from 'element-plus'
 import type { TProxyInfo } from 'types/proxyInfo'
 import { getProxyInfoList, saveProxyInfo, delProxyInfo } from '@/api/index'
-import JSONEditor from '@/utils/jsonEditor'
-import beautify from 'js-beautify'
+import JSONEditor from 'utils/jsonEditor'
+// import beautify from 'js-beautify'
 
 const tableData = ref<TProxyInfo[]>([])
 let jsonEditor: JSONEditor | null = null
@@ -91,12 +91,13 @@ const insertDB = async () => {
 
 const edit = async (info: TProxyInfo) => {
   info.editable = true
+  jsonEditor?.editModal(true)
   setJSONEditorValue(info)
 }
 const save = async (info: TProxyInfo) => {
   info.data = getJSONEditorValue()
   const res = await saveProxyInfo(info)
-  console.log('save', res)
+  jsonEditor?.editModal(false)
   info.editable = false
 }
 
@@ -110,6 +111,7 @@ const del = async (info: TProxyInfo) => {
  * @param info
  */
 const setJSONEditorValue = (info: TProxyInfo) => {
+  jsonEditor?.editModal(true)
   jsonEditor?.setValue(info.data)
   // fomatEditorValue(jsonEditorRef.value)
 }
@@ -123,7 +125,6 @@ const getJSONEditorValue = () => {
 /**
  * 格式化json编辑器的内容
  * @param editor
- */
 const fomatEditorValue = (editor: AceAjax.Editor | null) => {
   if (!editor) return
   const session = editor.getSession()
@@ -144,6 +145,7 @@ const fomatEditorValue = (editor: AceAjax.Editor | null) => {
     })
   }
 }
+ */
 </script>
 
 <style lang="scss" scoped>
