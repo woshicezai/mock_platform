@@ -9,9 +9,15 @@
     @change="changeProxyStatus"
   />
   <div>
-    <button @click="fetchServer">请求server</button>
+    <button @click="fetchHello">请求 api hello 接口</button>
+    <button @click="fetchBye">请求 api bye 接口</button>
     <div>
+      hello:
       <h1>{{ hello }}</h1>
+    </div>
+    <div>
+      bye:
+      <h1>{{ bye }}</h1>
     </div>
   </div>
 </template>
@@ -22,17 +28,29 @@ import proxyConfig from 'utils/http/proxy'
 import { ref } from 'vue'
 
 const hello = ref({})
+const bye = ref({})
 
 const isProxy = ref(proxyConfig.getProxy())
 
-const fetchServer = () => {
+const fetchHello = () => {
   hello.value = 'loading...'
   get('/api/hello')
     .then(function (data) {
       hello.value = data
     })
     .catch((e) => {
-      hello.value = 'error'
+      hello.value = e
+    })
+}
+
+const fetchBye = () => {
+  bye.value = 'loading...'
+  get('/api/bye')
+    .then(function (data) {
+      bye.value = data
+    })
+    .catch((e) => {
+      bye.value = e
     })
 }
 
