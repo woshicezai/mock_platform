@@ -1,7 +1,6 @@
 // proxyClientRouter.js
 import express from 'express'
 import { URLModel } from '../database/model'
-
 const router = express.Router()
 
 /**

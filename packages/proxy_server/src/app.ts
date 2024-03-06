@@ -7,6 +7,7 @@ import proxyFilter from './proxy/filter'
 import proxyClientRouter from './routers/proxyClientRouter'
 import dataBaseConnect from './database/index'
 import { PORT, PREFIX_PROXY_NAME } from './const'
+import SocketServer from './socketServer'
 
 // 创建一个Express应用
 const app = express()
@@ -37,6 +38,9 @@ app.use(createProxyMiddleware(proxyFilter(PREFIX_PROXY_NAME), proxyOptions))
 app.use(`/${PREFIX_PROXY_NAME}`, proxyClientRouter)
 
 // 使应用监听指定端口并启动服务器
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Proxy Server is running on http://localhost:${PORT}`)
 })
+
+//注册socket服务，并启动
+SocketServer.register(server)

@@ -62,7 +62,7 @@ import { ElNotification } from 'element-plus'
 import type { TProxyInfo } from 'types/proxyInfo'
 import { getProxyInfoList, saveProxyInfo, delProxyInfo } from '@/api/index'
 import JSONEditor from 'utils/jsonEditor'
-// import beautify from 'js-beautify'
+import SocketClient from 'utils/request/socketClient'
 
 const tableData = ref<TProxyInfo[]>([])
 let jsonEditor: JSONEditor | null = null
@@ -73,6 +73,10 @@ onMounted(async () => {
   tableData.value = list
 
   jsonEditor = new JSONEditor('jsoneditor')
+
+  //与代理服务器建立监听socket，实时获取客户端发到代理服务器的数据
+  const socketClient = new SocketClient()
+  socketClient.listen('data', receiptDataFromProxyServer)
 })
 
 const changeProxyStatus = async (row: TProxyInfo) => {
@@ -122,30 +126,10 @@ const setJSONEditorValue = (info: TProxyInfo) => {
 const getJSONEditorValue = () => {
   return jsonEditor?.getValue<TProxyInfo['data']>()
 }
-/**
- * 格式化json编辑器的内容
- * @param editor
-const fomatEditorValue = (editor: AceAjax.Editor | null) => {
-  if (!editor) return
-  const session = editor.getSession()
-  const content = session.getValue()
-  // 对 JSON 进行格式化，确保内容是 JSON，否则会抛出错误
-  try {
-    const formattedContent = beautify.js(content, {
-      indent_size: 2,
-      space_in_empty_paren: true
-      // 其他的 js-beautify 选项
-    })
-    session.setValue(formattedContent)
-  } catch (error) {
-    ElNotification({
-      title: 'Error formatting content',
-      message: (error as Error).message,
-      type: 'error'
-    })
-  }
+
+const receiptDataFromProxyServer = (data) => {
+  console.log('receiptDataFromProxyServer', data)
 }
- */
 </script>
 
 <style lang="scss" scoped>
