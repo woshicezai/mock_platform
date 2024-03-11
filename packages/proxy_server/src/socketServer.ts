@@ -1,6 +1,7 @@
 import { Server } from 'socket.io'
 import http from 'http'
 import { DefaultEventsMap } from 'socket.io/dist/typed-events'
+import type { TSoketData } from 'commonTypes/socket'
 
 export default class SocketServer {
   static io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
@@ -13,7 +14,7 @@ export default class SocketServer {
     })
   }
 
-  static send(eventName: string, data: any) {
+  static send(eventName: string, data: TSoketData) {
     this.io.emit(eventName, data) // 向所有已连接的客户端发送数据
   }
 

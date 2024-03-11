@@ -61,8 +61,8 @@ import { onMounted, ref } from 'vue'
 import { ElNotification } from 'element-plus'
 import type { TProxyInfo } from 'types/proxyInfo'
 import { getProxyInfoList, saveProxyInfo, delProxyInfo } from '@/api/index'
-import JSONEditor from 'utils/jsonEditor'
 import SocketClient from 'utils/request/socketClient'
+import JSONEditor from 'utils/jsonEditor'
 
 const tableData = ref<TProxyInfo[]>([])
 let jsonEditor: JSONEditor | null = null

@@ -3,7 +3,7 @@ import { io } from 'socket.io-client'
 export default class SocketClient {
   socket
   constructor() {
-    this.socket = io('http://localhost:4000')
+    this.socket = io('http://localhost:4000') //TODO: 这里要换成可配置的
     this.socket.on('connect', () => {
       console.log(`连接成功`)
     })

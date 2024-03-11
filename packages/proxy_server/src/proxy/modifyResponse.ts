@@ -1,5 +1,4 @@
 import { URLModel } from '../database/model'
-
 import SocketServer from '../socketServer'
 
 /**
@@ -15,11 +14,18 @@ export const modifyResponseToString = async (url: string, response: any) => {
       lean: true
     })
     if (data) {
-      //说明查到符合url的数据了
-      SocketServer.send('data', data.data)
+      //说明查到符合url的代理数据了
+      SocketServer.send('data', {
+        url,
+        data: data.data
+      })
       return JSON.stringify(data.data)
     } else {
-      SocketServer.send('data', JSON.parse(response))
+      //没有查到，说明没有做过代理配置，则将目标服务器的响应返回去
+      SocketServer.send('data', {
+        url,
+        data: JSON.parse(response)
+      })
       return response
     }
   } catch (error) {
