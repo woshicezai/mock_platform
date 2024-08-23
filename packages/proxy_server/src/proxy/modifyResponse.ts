@@ -17,14 +17,20 @@ export const modifyResponseToString = async (url: string, response: any) => {
       //说明查到符合url的代理数据了
       SocketServer.send('data', {
         url,
-        data: data.data
+        data: data.data,
+        isProxy: true,
+        title: '返回的数据',
+        editable: true
       })
       return JSON.stringify(data.data)
     } else {
       //没有查到，说明没有做过代理配置，则将目标服务器的响应返回去
       SocketServer.send('data', {
         url,
-        data: JSON.parse(response)
+        data: JSON.parse(response),
+        isProxy: false,
+        title: '返回的数据',
+        editable: true
       })
       return response
     }
