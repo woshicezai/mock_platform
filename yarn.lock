@@ -261,6 +261,11 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.15.tgz#d7c6e6755c78567a951e04ab52ef0fd26de59f32"
   integrity sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==
 
+"@juggle/resize-observer@^3.3.1":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
+  integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
+
 "@mongodb-js/saslprep@^1.1.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@mongodb-js/saslprep/-/saslprep-1.1.1.tgz#9a6c2516bc9188672c4d953ec99760ba49970da7"
@@ -3748,6 +3753,13 @@ vue-tsc@^1.8.25:
     "@volar/typescript" "~1.11.1"
     "@vue/language-core" "1.8.27"
     semver "^7.5.4"
+
+vue-virtual-list-v3@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/vue-virtual-list-v3/-/vue-virtual-list-v3-1.5.2.tgz#2798b084252e4a5dd3d4e5b1307a56bac9d09ffa"
+  integrity sha512-KQRefTBFC54SoL9UXtEEIx311iLL+4/HJaKu0ZiMCubSo2teLIkg2hk3RJCqThBV5i6GeiJL09IjaSb+dNQbtQ==
+  dependencies:
+    "@juggle/resize-observer" "^3.3.1"
 
 vue@^3.3.11:
   version "3.3.13"

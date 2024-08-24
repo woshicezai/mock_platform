@@ -1,5 +1,5 @@
 import { post, get } from 'utils/request'
-import type { TProxyInfo } from 'types/proxyInfo'
+import type { TProxyInfo } from 'commonTypes/socket'
 
 export function getProxyInfoList() {
   return get<TProxyInfo[]>('/getProxyInfoList', {})
@@ -10,5 +10,5 @@ export function saveProxyInfo(info: TProxyInfo) {
 }
 
 export function delProxyInfo(info: TProxyInfo) {
-  return post<TProxyInfo, Boolean>('/delete', info)
+  return post<TProxyInfo, Boolean>('/deleteByUrl', info)
 }
