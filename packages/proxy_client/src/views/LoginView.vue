@@ -37,6 +37,7 @@ import { ref } from 'vue'
 import { ElForm, ElFormItem, ElInput, ElButton, ElCard, ElMessage } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 import { login } from 'api/userAuth'
+import { useRouter } from 'vue-router'
 
 const loginForm = ref(null)
 const form = ref({
@@ -49,21 +50,23 @@ const rules = {
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 }
 
+const router = useRouter();
+
 const submitForm = () => {
   loginForm.value.validate((valid) => {
     if (valid) {
-      console.log('登录成功')
-      // 这里可以添加登录逻辑
       login(form.value)
         .then((response) => {
-          console.log('登录成功', response)
+          if(response.code === 0){
+            router.replace('/home')
+          }else{
+            ElMessage.error(response.message)
+          }
         })
         .catch((error) => {
-          console.error('登录错误', error)
           ElMessage.error(error.message)
         })
     } else {
-      console.log('表单验证失败')
       return false
     }
   })

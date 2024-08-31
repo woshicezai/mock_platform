@@ -18,6 +18,7 @@
     "axios": "^1.6.4",
     "element-plus": "^2.4.4",
     "js-beautify": "^1.14.11",
+    "jsencrypt": "^3.3.2",
     "pinia": "^2.1.7",
     "socket.io-client": "^4.7.4",
     "vue": "^3.3.11",
