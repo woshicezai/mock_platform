@@ -5,6 +5,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 import proxyOptions from './proxy/options'
 import proxyFilter from './proxy/filter'
 import proxyClientRouter from './routers/proxyClientRouter'
+import userAuthRouter from './routers/userAuthRouter'
 import dataBaseConnect from './database/index'
 import { PORT, PREFIX_PROXY_NAME } from './const'
 import SocketServer from './socketServer'
@@ -35,7 +36,9 @@ app.get('/', function (req, res) {
 //代理所有请求，如果是根路径或以/proxy-client开头的路径，不进行代理
 app.use(createProxyMiddleware(proxyFilter(PREFIX_PROXY_NAME), proxyOptions))
 //代理前端页面的请求处理
+
 app.use(`/${PREFIX_PROXY_NAME}`, proxyClientRouter)
+app.use(`/${PREFIX_PROXY_NAME}`, userAuthRouter)
 
 // 使应用监听指定端口并启动服务器
 const server = app.listen(PORT, () => {

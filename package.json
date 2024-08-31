@@ -15,6 +15,7 @@
     "example": "concurrently \"yarn dev:client\" \"yarn dev:server\" \" cd example/front && yarn && yarn dev\" \"cd example/server && yarn && yarn dev\""
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "concurrently": "^8.2.2"
   }
 }
