@@ -23,14 +23,20 @@
           <el-button type="primary" @click="submitForm" class="w-full">登录</el-button>
         </el-form-item>
       </el-form>
+      <div class="mt-4 text-center">
+        <router-link to="/register" class="text-blue-500 hover:text-blue-700">
+          还没有账号？去注册
+        </router-link>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { ElForm, ElFormItem, ElInput, ElButton, ElCard } from 'element-plus'
+import { ElForm, ElFormItem, ElInput, ElButton, ElCard, ElMessage } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
+import { login } from 'api/userAuth'
 
 const loginForm = ref(null)
 const form = ref({
@@ -48,6 +54,14 @@ const submitForm = () => {
     if (valid) {
       console.log('登录成功')
       // 这里可以添加登录逻辑
+      login(form.value)
+        .then((response) => {
+          console.log('登录成功', response)
+        })
+        .catch((error) => {
+          console.error('登录错误', error)
+          ElMessage.error(error.message)
+        })
     } else {
       console.log('表单验证失败')
       return false

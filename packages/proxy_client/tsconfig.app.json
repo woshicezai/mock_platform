@@ -5,10 +5,10 @@
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
-    "rootDir": "../..",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "api/*": ["./src/api/*"],
       "types/*": ["./src/types/*"],
       "utils/*": ["./src/utils/*"],
       "commonTypes/*":["../types/*"]
