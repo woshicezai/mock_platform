@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { tokenService } from '../tokenStorage'
 
 const httpInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -10,13 +11,21 @@ const httpInstance = axios.create({
 
 /**
  * 请求拦截器
- * todo: 添加token
  * @param config
  * @returns
  */
-httpInstance.interceptors.request.use((config) => {
-  return config
-})
+httpInstance.interceptors.request.use(
+  (config) => {
+    const token = tokenService.getToken()
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 /**
  * 响应拦截器

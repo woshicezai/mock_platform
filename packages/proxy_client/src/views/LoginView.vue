@@ -4,7 +4,13 @@
       <template #header>
         <h2 class="text-2xl font-bold text-center text-gray-800">用户登录</h2>
       </template>
-      <el-form :model="form" :rules="rules" ref="loginForm" class="space-y-6">
+      <el-form
+        :model="form"
+        :rules="rules"
+        ref="loginForm"
+        class="space-y-6"
+        @submit.prevent="submitForm"
+      >
         <el-form-item prop="username">
           <el-input v-model="form.username" placeholder="用户名">
             <template #prefix>
@@ -20,7 +26,7 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm" class="w-full">登录</el-button>
+          <el-button type="primary" class="w-full" native-type="submit">登录</el-button>
         </el-form-item>
       </el-form>
       <div class="mt-4 text-center">
@@ -50,16 +56,16 @@ const rules = {
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 }
 
-const router = useRouter();
+const router = useRouter()
 
 const submitForm = () => {
   loginForm.value.validate((valid) => {
     if (valid) {
       login(form.value)
         .then((response) => {
-          if(response.code === 0){
+          if (response.code === 0) {
             router.replace('/home')
-          }else{
+          } else {
             ElMessage.error(response.message)
           }
         })

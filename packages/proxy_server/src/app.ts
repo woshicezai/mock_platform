@@ -35,8 +35,8 @@ app.get('/', function (req, res) {
 })
 //代理所有请求，如果是根路径或以/proxy-client开头的路径，不进行代理
 app.use(createProxyMiddleware(proxyFilter(PREFIX_PROXY_NAME), proxyOptions))
-//代理前端页面的请求处理
 
+//代理服务自身的请求处理
 app.use(`/${PREFIX_PROXY_NAME}`, proxyClientRouter)
 app.use(`/${PREFIX_PROXY_NAME}`, userAuthRouter)
 
