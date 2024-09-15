@@ -1,5 +1,5 @@
 import { URLModel } from '../database/model'
-import SocketServer from '../socketServer'
+import SocketServer from '../utils/socketServer'
 
 /**
  * 修改返回的响应体
@@ -29,7 +29,7 @@ export const modifyResponseToString = async (url: string, response: any) => {
         url,
         data: JSON.parse(response),
         isProxy: false,
-        title: '返回的数据',
+        title: '返回的数据-没查到',
         editable: true
       })
       return response

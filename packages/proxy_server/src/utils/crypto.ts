@@ -33,3 +33,13 @@ export function decryptPassword(encryptedPassword: string, privateKey: string): 
 export function generateHash(message: string): string {
   return bcrypt.hashSync(message, 10)
 }
+
+// 生成客户端id
+export function generateClientId(userId: string) {
+  const hash = crypto.createHash('sha256')
+  const randomString = crypto.randomBytes(16).toString('hex')
+  return hash
+    .update(userId + randomString)
+    .digest('hex')
+    .substring(0, 15)
+}

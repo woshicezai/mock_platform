@@ -1,25 +1,21 @@
 // proxyClientRouter.js
 import express from 'express'
-import { URLModel } from '../database/model'
-const router = express.Router()
+import { URLModel, TokenModel, UserModel } from '../database/model'
+import { authMiddleware } from '../utils/token'
+import type { IAuthenticatedRequest } from '../utils/token'
 
-/**
- * 获取所有url的代理配置数据
- */
-router.get('/getProxyInfoList', async (req, res) => {
-  const list = await URLModel.find({}).exec()
-  res.send(list)
-})
+const router = express.Router()
+//TODO: 这个中间件是只影响 当前的 proxyClientRouter吗？
+router.use(authMiddleware(TokenModel, UserModel))
 
 /**
  * 保存编辑后的代理配置数据
- * TODO: 还得是当前用户下的数据
  */
-router.post('/save', async (req, res) => {
+router.post('/save', async (req: IAuthenticatedRequest, res) => {
   try {
     const { data = {} } = req.body
     const result = await URLModel.updateOne(
-      { url: data.url },
+      { userId: req.user?.userId, url: data.url },
       { $set: { ...data, date: Date.now() } },
       { upsert: true }
     ).exec()
@@ -33,11 +29,10 @@ router.post('/save', async (req, res) => {
 
 /**
  * 删除操作：对于url进行删除
- * TODO: 还得是当前用户下的数据
  */
-router.post('/deleteByUrl', async (req, res) => {
+router.post('/deleteByUrl', async (req: IAuthenticatedRequest, res) => {
   const { data = {} } = req.body
-  const result = await URLModel.deleteMany({ url: data.url }).exec()
+  const result = await URLModel.deleteMany({ userId: req.user?.userId, url: data.url }).exec()
   console.log('deleteByUrl-success', result)
   res.send(result.acknowledged)
 })

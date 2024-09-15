@@ -50,7 +50,7 @@ import { onMounted, ref } from 'vue'
 // import { ElNotification } from 'element-plus'
 // import VirtualList from 'vue-virtual-list-v3'
 import type { TProxyInfo } from 'commonTypes/socket'
-import { getProxyInfoList, saveProxyInfo, delProxyInfo } from '@/api/index'
+import { saveProxyInfo, delProxyInfo } from '@/api/index'
 import SocketClient from 'utils/request/socketClient'
 import JSONEditor from 'utils/jsonEditor'
 
@@ -60,11 +60,7 @@ let jsonEditor: JSONEditor | null = null
 const dataSourcesRef = ref<TProxyInfo[]>([])
 
 onMounted(async () => {
-  //获取所有代理配置
-  /* const list = await getProxyInfoList()
-  dataSourcesRef.value = list */
   jsonEditor = new JSONEditor('jsoneditor')
-
   //与代理服务器建立监听socket，实时获取客户端发到代理服务器的数据
   const socketClient = new SocketClient()
   socketClient.listen('data', receiptDataFromProxyServer)

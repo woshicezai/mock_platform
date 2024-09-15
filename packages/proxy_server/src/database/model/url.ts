@@ -1,6 +1,11 @@
 import { Schema, model } from 'mongoose'
 
 const urlSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   title: String,
   url: String,
   data: Object,

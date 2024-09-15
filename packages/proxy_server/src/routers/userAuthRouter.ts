@@ -4,7 +4,7 @@
 import express from 'express'
 import { UserModel, TokenModel } from '../database/model'
 import { generateHash, generateKeyPair, decryptPassword } from '../utils/crypto'
-import { generateToken } from '../utils/token'
+import { generateToken, revokeToken } from '../utils/token'
 
 const router = express.Router()
 
@@ -74,6 +74,18 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: 'An unknown error occurred' })
     }
   }
+})
+
+// 登出接口
+router.post('/logout', async (req, res) => {
+  // 从请求头获取 token
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1] // Bearer TOKEN
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' })
+  }
+  await revokeToken(token, TokenModel)
+  res.status(200).json({ code: 0, message: '登出成功' })
 })
 
 export default router

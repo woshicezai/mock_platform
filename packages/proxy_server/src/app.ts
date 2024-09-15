@@ -8,7 +8,7 @@ import proxyClientRouter from './routers/proxyClientRouter'
 import userAuthRouter from './routers/userAuthRouter'
 import dataBaseConnect from './database/index'
 import { PORT, PREFIX_PROXY_NAME } from './const'
-import SocketServer from './socketServer'
+import SocketServer from './utils/socketServer'
 
 // 创建一个Express应用
 const app = express()
@@ -34,11 +34,12 @@ app.get('/', function (req, res) {
   res.json({ message: '代理服务器请求正常' })
 })
 //代理所有请求，如果是根路径或以/proxy-client开头的路径，不进行代理
+//客户端请求，逻辑走的是 proxyOptions
 app.use(createProxyMiddleware(proxyFilter(PREFIX_PROXY_NAME), proxyOptions))
 
 //代理服务自身的请求处理
-app.use(`/${PREFIX_PROXY_NAME}`, proxyClientRouter)
 app.use(`/${PREFIX_PROXY_NAME}`, userAuthRouter)
+app.use(`/${PREFIX_PROXY_NAME}`, proxyClientRouter)
 
 // 使应用监听指定端口并启动服务器
 const server = app.listen(PORT, () => {

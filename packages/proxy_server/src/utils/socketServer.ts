@@ -14,6 +14,7 @@ export default class SocketServer {
     })
   }
 
+  //TODO 需要添加userId,定向发送
   static send(eventName: string, data: TProxyInfo) {
     this.io.emit(eventName, data) // 向所有已连接的客户端发送数据
   }
