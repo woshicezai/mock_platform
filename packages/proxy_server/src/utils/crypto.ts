@@ -35,11 +35,11 @@ export function generateHash(message: string): string {
 }
 
 // 生成客户端id
-export function generateClientId(userId: string) {
+export function generateClientId(token: string) {
   const hash = crypto.createHash('sha256')
   const randomString = crypto.randomBytes(16).toString('hex')
   return hash
-    .update(userId + randomString)
+    .update(token + randomString)
     .digest('hex')
     .substring(0, 15)
 }

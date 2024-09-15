@@ -1,7 +1,9 @@
 import Redis from 'ioredis'
 import type { Request, Response, NextFunction } from 'express'
+import { HTTP_NO_VALID_TOKEN_CODE } from '../const'
 
 const EXPIRE_TIME = 86400 // 1天过期
+
 const redis = new Redis()
 
 declare module 'express' {
@@ -12,6 +14,7 @@ declare module 'express' {
 
 /**
  * 存储客户端id和token的映射关系
+ * TODO: 过期时间是否改为1h？和token一致
  * @param clientId
  * @param token
  */
@@ -43,7 +46,7 @@ export async function authenticateClientIdMiddleware(
   const clientId = req.headers['client-id']
   const token = await getTokenFromClientId(clientId as string)
   if (!token) {
-    return res.status(401).json({ message: 'No token provided' })
+    return res.status(HTTP_NO_VALID_TOKEN_CODE).json({ message: 'No token provided' })
   }
   req.token = token
   next()

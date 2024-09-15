@@ -23,10 +23,7 @@ const options: Options = {
       // Combine the body chunks to create the full body
       const bodyString = Buffer.concat(originalBody).toString()
       // Modify the response here
-      const originalUrl = req.originalUrl || req.url
-      console.log('Original URL:', originalUrl)
-
-      const modifiedBody = await modifyResponseToString(originalUrl, bodyString) // Assume modifyResponse is your custom function
+      const modifiedBody = await modifyResponseToString(req, bodyString) // Assume modifyResponse is your custom function
       console.log('modifiedBody ', bodyString, modifiedBody)
       // You may need to adjust the content-length header if the body length has changed
       res.setHeader('Content-Length', Buffer.byteLength(modifiedBody))

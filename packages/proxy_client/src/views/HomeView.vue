@@ -53,6 +53,7 @@ import type { TProxyInfo } from 'commonTypes/socket'
 import { saveProxyInfo, delProxyInfo } from '@/api/index'
 import SocketClient from 'utils/request/socketClient'
 import JSONEditor from 'utils/jsonEditor'
+import { tokenService } from 'utils/tokenStorage'
 
 let jsonEditor: JSONEditor | null = null
 
@@ -62,7 +63,7 @@ const dataSourcesRef = ref<TProxyInfo[]>([])
 onMounted(async () => {
   jsonEditor = new JSONEditor('jsoneditor')
   //与代理服务器建立监听socket，实时获取客户端发到代理服务器的数据
-  const socketClient = new SocketClient()
+  const socketClient = new SocketClient(tokenService.getToken())
   socketClient.listen('data', receiptDataFromProxyServer)
 })
 

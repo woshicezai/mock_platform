@@ -19,7 +19,8 @@ const tokenSchema = new Schema({
   isRevoked: {
     type: Boolean,
     default: false
-  }
+  },
+  clientId: { type: String, required: true, unique: true },
 })
 
 export default model('Token', tokenSchema)

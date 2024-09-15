@@ -3,8 +3,10 @@
  */
 import express from 'express'
 import { UserModel, TokenModel } from '../database/model'
-import { generateHash, generateKeyPair, decryptPassword } from '../utils/crypto'
-import { generateToken, revokeToken } from '../utils/token'
+import { generateHash, generateKeyPair, decryptPassword, generateClientId } from '../utils/crypto'
+import { generateToken, revokeToken,deleteTokenByUserId } from '../utils/token'
+
+import { HTTP_NO_VALID_TOKEN_CODE } from '../const'
 
 const router = express.Router()
 
@@ -60,13 +62,18 @@ router.post('/login', async (req, res) => {
     }
     // 生成token
     const token = await generateToken(user._id)
+    //生成 clientId
+    const clientId = generateClientId(token)
+    // TokenModel 删除掉 之前的 token
+    await deleteTokenByUserId(user._id, TokenModel)
     // 存储到 MongoDB
     await TokenModel.create({
       userId: user._id,
-      token
+      token,
+      clientId
     })
     // 登录成功
-    res.status(200).json({ code: 0, message: '登录成功', userId: user._id, token })
+    res.status(200).json({ code: 0, message: '登录成功', token, clientId })
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
@@ -82,7 +89,7 @@ router.post('/logout', async (req, res) => {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1] // Bearer TOKEN
   if (!token) {
-    return res.status(401).json({ message: 'No token provided' })
+    return res.status(HTTP_NO_VALID_TOKEN_CODE).json({ message: 'No token provided' })
   }
   await revokeToken(token, TokenModel)
   res.status(200).json({ code: 0, message: '登出成功' })

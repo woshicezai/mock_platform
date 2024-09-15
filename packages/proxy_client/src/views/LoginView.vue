@@ -40,7 +40,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { ElForm, ElFormItem, ElInput, ElButton, ElCard, ElMessage } from 'element-plus'
+import { ElForm, ElFormItem, ElInput, ElButton, ElCard, ElMessage,ElMessageBox} from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 import { login } from 'api/userAuth'
 import { useRouter } from 'vue-router'
@@ -62,8 +62,9 @@ const submitForm = () => {
   loginForm.value.validate((valid) => {
     if (valid) {
       login(form.value)
-        .then((response) => {
+        .then(async (response) => {
           if (response.code === 0) {
+            await alertCopyClientId(response.clientId)
             router.replace('/home')
           } else {
             ElMessage.error(response.message)
@@ -76,6 +77,28 @@ const submitForm = () => {
       return false
     }
   })
+}
+
+const alertCopyClientId = (clientId) => {
+  return ElMessageBox.confirm(
+    `复制代理ID：${clientId}到客户端的请求头中，例如：x-client-id: ${clientId}`,
+    '代理Id',
+    {
+      confirmButtonText: '复制',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+    .then(() => {
+      navigator.clipboard.writeText(clientId)
+      ElMessage({
+        type: 'success',
+        message: '复制成功',
+      })
+      return true
+    }).catch((e)=>{
+      return Promise.reject(e.message)
+    })
 }
 </script>
 

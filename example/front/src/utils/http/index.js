@@ -7,7 +7,8 @@ const httpInstance = axios.create({
   timeout: import.meta.env.VITE_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
-    'x-target-host': import.meta.env.VITE_BASE_URL
+    'x-target-host': import.meta.env.VITE_BASE_URL,
+    'x-client-id':'e1e468254abc0db'
   }
 })
 
